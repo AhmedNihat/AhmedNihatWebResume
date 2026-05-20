@@ -1960,7 +1960,7 @@
       message: form.message.value.trim(),
     };
 
-    fetch('/api/message', {
+    fetch('https://ahmednihatportfoliobackend.onrender.com/api/message', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
