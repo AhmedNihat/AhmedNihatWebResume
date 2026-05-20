@@ -1959,11 +1959,11 @@
     
     // 💡 এখানে ফিক্স করা হয়েছে: ফর্মের আইডি ও ব্যাকএন্ড চাবি পারফেক্টলি সিঙ্কড
     const payload = {
-      name: (document.getElementById('name')?.value || form.user_name?.value || '').trim(),
-      email: (document.getElementById('email')?.value || form.user_email?.value || '').trim(),
-      subject: (document.getElementById('subject')?.value || form.subject?.value || '').trim() || 'Portfolio Contact',
-      message: (document.getElementById('message_body')?.value || form.message?.value || '').trim(),
-    };
+        name: form.elements['user_name'].value.trim(),
+        email: form.elements['user_email'].value.trim(),
+        subject: (form.elements['subject'].value.trim()) || 'Portfolio Contact',
+        message: form.elements['message'].value.trim(),
+      };
 
    fetch('https://formspree.io/f/xkoejwro', {
         method: 'POST',
