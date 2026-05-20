@@ -1965,11 +1965,19 @@
       message: (document.getElementById('message_body')?.value || form.message?.value || '').trim(),
     };
 
-    fetch('https://ahmednihatportfoliobackend.onrender.com/api/message', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
+   fetch('https://formspree.io/f/xkoejwro', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          subject: payload.subject,
+          message: payload.message
+        }),
+      })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data?.message || 'Message failed to send');
