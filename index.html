@@ -1944,20 +1944,25 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
-  /* ── FORM SUBMIT ── */
+ /* ── FORM SUBMIT ── */
   document.getElementById('contactForm').addEventListener('submit', e => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btn-text');
-    btn.style.opacity = '0.7'; btn.style.pointerEvents = 'none';
+    
+    // বাটন লক করা এবং অ্যানিমেশন স্টেট চালু করা
+    btn.style.opacity = '0.7'; 
+    btn.style.pointerEvents = 'none';
     btnText.textContent = 'TRANSMITTING...';
 
     const form = e.target;
+    
+    // 💡 এখানে ফিক্স করা হয়েছে: ফর্মের আইডি ও ব্যাকএন্ড চাবি পারফেক্টলি সিঙ্কড
     const payload = {
-      name: form.user_name.value.trim(),
-      email: form.user_email.value.trim(),
-      subject: (form.subject?.value || '').trim() || 'Portfolio Contact',
-      message: form.message.value.trim(),
+      name: (document.getElementById('name')?.value || form.user_name?.value || '').trim(),
+      email: (document.getElementById('email')?.value || form.user_email?.value || '').trim(),
+      subject: (document.getElementById('subject')?.value || form.subject?.value || '').trim() || 'Portfolio Contact',
+      message: (document.getElementById('message_body')?.value || form.message?.value || '').trim(),
     };
 
     fetch('https://ahmednihatportfoliobackend.onrender.com/api/message', {
@@ -1971,13 +1976,20 @@
         return data;
       })
       .then(() => {
+        // সফল হলে মেসেজ দেখাবে
         const msg = document.getElementById('form-msg');
         msg.style.display = 'block';
-        form.reset();
+        msg.style.borderColor = 'rgba(0,255,200,0.45)';
+        msg.style.background = 'rgba(0,255,200,0.08)';
+        msg.style.color = 'rgba(220,255,245,0.95)';
+        msg.innerHTML = '<i class="fas fa-circle-check" style="color:var(--mint);margin-right:8px;"></i>CORE CONNECTION ESTABLISHED — MESSAGE TRANSMITTED.';
+        
+        form.reset(); // ফর্মের টেক্সটবক্স খালি করা
         setTimeout(() => { msg.style.display = 'none'; }, 5000);
       })
-      .catch(() => {
-        // Minimal failure state (keeps UI consistent)
+      .catch((error) => {
+        console.error('Error details:', error);
+        // ফেইল করলে লাল এরর মেসেজ দেখাবে
         const msg = document.getElementById('form-msg');
         msg.style.display = 'block';
         msg.style.borderColor = 'rgba(255,77,141,0.45)';
@@ -1987,7 +1999,9 @@
         setTimeout(() => { msg.style.display = 'none'; }, 5000);
       })
       .finally(() => {
-        btn.style.opacity = '1'; btn.style.pointerEvents = '';
+        // বাটন আনলক করে আগের টেক্সট ফেরত আনা
+        btn.style.opacity = '1'; 
+        btn.style.pointerEvents = '';
         btnText.textContent = 'TRANSMIT MESSAGE';
       });
   });
