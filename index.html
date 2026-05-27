@@ -812,6 +812,29 @@
     ═══════════════════════════════════════════ */
     #contact { background: linear-gradient(135deg, var(--dark2) 0%, var(--dark3) 50%, var(--dark2) 100%); }
 
+/* ── Contact section padding alignment fix ── */
+#contact .section-wrap {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 90px 14px 48px;
+  }
+  .section-wrap {
+    padding: 22px 18px;
+  }
+  #contact .section-wrap {
+    padding: 22px 18px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  section {
+    padding: 100px 16px 50px;
+  }
+}
+
     /* Orbs — hidden on small screens to prevent overflow */
     .contact-orb { position:absolute; border-radius:50%; pointer-events:none; filter:blur(60px); }
     .contact-orb-1 { width:300px; height:300px; background:rgba(124,58,255,0.12); top:-80px; right:-60px; }
@@ -1574,7 +1597,7 @@
 
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
-  <div class="section-wrap" style="overflow:visible;">
+  <div class="section-wrap">
     <div class="contact-orb contact-orb-1"></div>
     <div class="contact-orb contact-orb-2"></div>
     <div class="contact-orb contact-orb-3"></div>
